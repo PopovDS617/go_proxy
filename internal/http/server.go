@@ -12,21 +12,24 @@ type HTTPServer struct {
 	Addr   string
 }
 
-func (s *HTTPServer) New() {
-	s.getConfig()
-
+func NewHTTPServer() *HTTPServer {
+	addr := getConfig()
 	r := mux.NewRouter().SkipClean(true)
-	r.HandleFunc("/proxy/{url:.*}", Proxy).Methods(http.MethodGet, http.MethodPost)
+	r.HandleFunc("/proxy/{url:.*}", proxy).Methods(http.MethodGet, http.MethodPost)
 
 	server := &http.Server{
-		Addr:    s.Addr,
+		Addr:    addr,
 		Handler: r,
 	}
 
-	s.Server = server
+	return &HTTPServer{
+		Server: server,
+		Addr:   addr,
+	}
+
 }
 
-func (s *HTTPServer) getConfig() {
+func getConfig() string {
 	port := os.Getenv("HTTP_PORT")
 
 	if port == "" {
@@ -35,5 +38,5 @@ func (s *HTTPServer) getConfig() {
 		port = ":" + port
 	}
 
-	s.Addr = port
+	return port
 }

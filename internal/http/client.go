@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-var HTTPClient = &http.Client{
+var httpClient = &http.Client{
 	Timeout: 5 * time.Second,
 	Transport: &http.Transport{
 		TLSHandshakeTimeout:   3 * time.Second,
