@@ -14,7 +14,7 @@ import (
 	"golang.org/x/exp/slog"
 )
 
-func Proxy(w http.ResponseWriter, r *http.Request) {
+func proxy(w http.ResponseWriter, r *http.Request) {
 
 	targetURL := mux.Vars(r)["url"]
 
@@ -38,7 +38,7 @@ func Proxy(w http.ResponseWriter, r *http.Request) {
 
 	req.Header = r.Header.Clone()
 
-	resp, err := HTTPClient.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		var nerr net.Error
 		if errors.As(err, &nerr) {
