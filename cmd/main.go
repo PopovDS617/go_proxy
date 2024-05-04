@@ -12,8 +12,7 @@ import (
 
 func main() {
 
-	server := httpServer.HTTPServer{}
-	server.New()
+	server := httpServer.NewHTTPServer()
 
 	go func() {
 		log.Printf("starting HTTP Proxy Server. Listening at %s", server.Addr)
